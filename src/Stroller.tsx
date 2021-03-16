@@ -27,6 +27,8 @@ export interface IStrollerProps {
   scrollKey?: any;
 
   passive?: boolean;
+
+  onScroll?: () => void;
 }
 
 export interface IComponentState {
@@ -179,7 +181,7 @@ export class Stroller extends React.Component<IStrollerProps, IComponentState> {
 
     const st: any = this.state;
 
-    const {axis = 'vertical' } = this.props;
+    const {axis = 'vertical', onScroll } = this.props;
 
     const mainScroll = extractValues(st, axis);
 
@@ -198,6 +200,10 @@ export class Stroller extends React.Component<IStrollerProps, IComponentState> {
 
       hasScroll: mainScroll.scrollSpace > mainScroll.space,
     });
+
+    if (onScroll) {
+      onScroll();
+    }
   };
 
   private attach(parent: HTMLElement | Window) {
